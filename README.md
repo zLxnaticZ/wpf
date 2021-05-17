@@ -373,7 +373,7 @@ Width="120" />
 
 
 ###Relay close program, constructor
-
+```
 public MainViewModel()
         {
             CloseCommand = new RelayCommand<string>(par =>
@@ -385,15 +385,17 @@ public MainViewModel()
 
      ###Close command
         public ICommand CloseCommand { get; set; }
-
+```
 
 
 ### Menu close program example
+```
 <Menu Grid.ColumnSpan="2" Margin="0,0,0,46">
      <MenuItem Header="Program">
            <MenuItem Header="Close" Command="{Binding CloseCommand}" />
      </MenuItem>
 </Menu>
+```
 
 
 
