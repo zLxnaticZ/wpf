@@ -1,4 +1,4 @@
-# POS Exam - C# WPF
+# POS Exam - C# WPF test
 
 ## 0 Connections
 ## 0.1 Scope Definition
