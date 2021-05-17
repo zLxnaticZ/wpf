@@ -364,10 +364,10 @@ private List<string> _genders = new (){"male", "female", "other"};
         
         
 ##In xaml
-```
+
 <ComboBox SelectedItem="{Binding SelectedGender}" ItemsSource="{Binding Genders}" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.Row="4" VerticalAlignment="Top"   
 Width="120" />
-```
+
 ```
 
 
