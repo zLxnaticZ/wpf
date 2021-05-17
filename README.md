@@ -301,6 +301,7 @@ namespace RegistrationForm.ViewModels
 
 
 # Random Sliders, Textboxes, Textblocks, Labels, Dates with Bindings, nested and MinMaxValidation
+```
 <Slider Grid.Column="1" Value="{Binding Height}" Minimum="0" Maximum="300" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Width="385"/>
         <Slider HorizontalAlignment="Left" Value="{Binding Weight}" Minimum="0" Maximum="150" Margin="5,24,0,0" VerticalAlignment="Top" Width="385" Grid.Column="1" Grid.Row="1"/>
         <Label Content="Height" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -327,7 +328,7 @@ namespace RegistrationForm.ViewModels
                 </Binding>
             </TextBox.Text>
         </TextBox>
-
+```
 
 
 ###Combobox gender example in MainViewmModel
@@ -360,13 +361,19 @@ private List<string> _genders = new (){"male", "female", "other"};
         }
         ```
         
-### in xaml
+        
+        
+##In xaml
+```
 <ComboBox SelectedItem="{Binding SelectedGender}" ItemsSource="{Binding Genders}" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.Row="4" VerticalAlignment="Top"   
 Width="120" />
+```
+```
 
 
 
-### Relay close program, constructor
+###Relay close program, constructor
+
 public MainViewModel()
         {
             CloseCommand = new RelayCommand<string>(par =>
@@ -374,7 +381,7 @@ public MainViewModel()
                 System.Windows.Application.Current.Shutdown();
             });
         }
-
+    
 
      ###Close command
         public ICommand CloseCommand { get; set; }
