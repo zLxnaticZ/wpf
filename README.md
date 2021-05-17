@@ -221,6 +221,7 @@ example:
 
 
 ## Gabriel Date Time converter class
+```
 namespace RegistrationForm.ViewModels
 {
     class DateTimeConverter : IValueConverter
@@ -245,7 +246,7 @@ namespace RegistrationForm.ViewModels
         }
     }
 }
-
+```
 
 
 
