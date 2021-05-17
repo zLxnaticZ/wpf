@@ -2,12 +2,12 @@
 
 ## 0 Connections
 ## 0.1 Scope Definition
-##Moritz
+##Moritz vs mine
 ```csharp
     xmlns:vm="clr-namespace:Calculator.ViewModel"
     xmlns:validation="clr-namespace:Registration.Validation"
 ```
-##Mine
+
     xmlns:local="clr-namespace:BMI"
     xmlns:vm="clr-namespace:BMI.ViewModels"
 ```
@@ -21,6 +21,8 @@
 
 ## 0.3 Converter as Resource (insert validation rule, converter etc.)
 ```csharp
+##Moritz vs mine
+
     <Window.Resources>
         <con:DateConverter x:Key="DateConverter" />
     </Window.Resources>
@@ -218,7 +220,7 @@ example:
 ```
 
 
-### Gabriel Date Time converter class
+## Gabriel Date Time converter class
 namespace RegistrationForm.ViewModels
 {
     class DateTimeConverter : IValueConverter
@@ -248,7 +250,8 @@ namespace RegistrationForm.ViewModels
 
 
 ## 6 Validation
-## Mritz
+## Moritz vs mine
+
 - implement `ValidationRule`
 - method: `public override ValidationResult Validate(object value, CultureInfo cultureInfo)`
 ```csharp
@@ -267,7 +270,8 @@ namespace RegistrationForm.ViewModels
     }
     ```
     
-    ## Mine
+    
+    
     public class MinMaxValidation : ValidationRule
     {
         public int Min { get; set; }
@@ -325,7 +329,9 @@ namespace RegistrationForm.ViewModels
 
 
 
-###Combobox gender example in mainviewmodel
+###Combobox gender example in MainViewmModel
+```
+
 private List<string> _genders = new (){"male", "female", "other"};
         private string _selectedGender = "other";
 
@@ -351,9 +357,12 @@ private List<string> _genders = new (){"male", "female", "other"};
                 OnPropertyChanged(nameof(Genders));
             }
         }
+        ```
         
-        ### in xaml
-        <ComboBox SelectedItem="{Binding SelectedGender}" ItemsSource="{Binding Genders}" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120" />
+### in xaml
+<ComboBox SelectedItem="{Binding SelectedGender}" ItemsSource="{Binding Genders}" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.Row="4" VerticalAlignment="Top"   
+Width="120" />
+
 
 
 ### Relay close program, constructor
@@ -368,6 +377,7 @@ public MainViewModel()
 
      ###Close command
         public ICommand CloseCommand { get; set; }
+
 
 
 ### Menu close program example
