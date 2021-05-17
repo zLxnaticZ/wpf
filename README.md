@@ -217,6 +217,36 @@ example:
     }
 ```
 
+
+### Gabriel Date Time converter class
+namespace RegistrationForm.ViewModels
+{
+    class DateTimeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value != null)
+            {
+                DateTime test = (DateTime)value;
+                string date = test.ToString("dd/MM/yyyy");
+                return (date);
+            }
+            return string.Empty;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (DateTime.TryParseExact((string)value, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime result)) {
+                return result;
+            }
+            return null;
+        }
+    }
+}
+
+
+
+
 ## 6 Validation
 ## Mritz
 - implement `ValidationRule`
@@ -263,6 +293,8 @@ example:
     }
 ```
 
+
+
 # Random Sliders, Textboxes, Textblocks, Labels, Dates with Bindings, nested and MinMaxValidation
 <Slider Grid.Column="1" Value="{Binding Height}" Minimum="0" Maximum="300" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Width="385"/>
         <Slider HorizontalAlignment="Left" Value="{Binding Weight}" Minimum="0" Maximum="150" Margin="5,24,0,0" VerticalAlignment="Top" Width="385" Grid.Column="1" Grid.Row="1"/>
@@ -290,6 +322,7 @@ example:
                 </Binding>
             </TextBox.Text>
         </TextBox>
+
 
 
 ###Combobox gender example in mainviewmodel
