@@ -1,10 +1,15 @@
-# POS Exam - C# WPF test
+# POS Exam - C# WPF 
 
 ## 0 Connections
 ## 0.1 Scope Definition
+##Moritz
 ```csharp
     xmlns:vm="clr-namespace:Calculator.ViewModel"
     xmlns:validation="clr-namespace:Registration.Validation"
+```
+##Mine
+    xmlns:local="clr-namespace:BMI"
+    xmlns:vm="clr-namespace:BMI.ViewModels"
 ```
 
 ## 0.2 View Model - View
@@ -14,10 +19,14 @@
     </Window.DataContext>
 ```
 
-## 0.3 Converter as Resource
+## 0.3 Converter as Resource (insert validation rule, converter etc.)
 ```csharp
     <Window.Resources>
         <con:DateConverter x:Key="DateConverter" />
+    </Window.Resources>
+    
+    <Window.Resources>
+        <vm:MinMaxValidation x:Key="MinMaxValidation"/>
     </Window.Resources>
 ```
 
@@ -209,6 +218,7 @@ example:
 ```
 
 ## 6 Validation
+## Mritz
 - implement `ValidationRule`
 - method: `public override ValidationResult Validate(object value, CultureInfo cultureInfo)`
 ```csharp
@@ -225,7 +235,117 @@ example:
         }
 
     }
+    ```
+    
+    ## Mine
+    public class MinMaxValidation : ValidationRule
+    {
+        public int Min { get; set; }
+        public int Max { get; set; }
+
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+        {
+            int number;
+            if (!int.TryParse((string)value, out number))
+            {
+                return new ValidationResult(false, "Not a number");
+            }
+            if (number < Min)
+            {
+                return new ValidationResult(false, "Too low");
+            }
+            if (number > Max)
+            {
+                return new ValidationResult(false, "Too high");
+            }
+            return ValidationResult.ValidResult;
+        }
+    }
 ```
+
+# Random Sliders, Textboxes, Textblocks, Labels, Dates with Bindings, nested and MinMaxValidation
+<Slider Grid.Column="1" Value="{Binding Height}" Minimum="0" Maximum="300" HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Width="385"/>
+        <Slider HorizontalAlignment="Left" Value="{Binding Weight}" Minimum="0" Maximum="150" Margin="5,24,0,0" VerticalAlignment="Top" Width="385" Grid.Column="1" Grid.Row="1"/>
+        <Label Content="Height" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Content="Weight" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"/>
+        <Label Content="Birthdate" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2"/>
+        <Label Content="Result" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="3" Text="{Binding Result}" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <DatePicker Grid.Column="1" SelectedDate="{Binding Birthdate}" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Left" Margin="270,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+            <TextBox.Text>
+                <Binding Path="Height" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <vm:MinMaxValidation Min="0" Max="300"/>
+                </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox HorizontalAlignment="Left" Margin="270,24,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Row="1" TextChanged="TextBox_TextChanged">
+            <TextBox.Text>
+                <Binding Path="Weight" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <vm:MinMaxValidation Min="0" Max="150"/>
+                </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+
+
+###Combobox gender example in mainviewmodel
+private List<string> _genders = new (){"male", "female", "other"};
+        private string _selectedGender = "other";
+
+        public string SelectedGender
+        {
+            get => _selectedGender;
+            set
+            {
+                if (value == _selectedGender) return;
+                _selectedGender = value;
+                OnPropertyChanged(nameof(SelectedGender));
+                OnPropertyChanged(nameof(Result));
+            }
+        }
+
+        public List<string> Genders
+        {
+            get => _genders;
+            set
+            {
+                if (Equals(value, _genders)) return;
+                _genders = value;
+                OnPropertyChanged(nameof(Genders));
+            }
+        }
+        
+        ### in xaml
+        <ComboBox SelectedItem="{Binding SelectedGender}" ItemsSource="{Binding Genders}" HorizontalAlignment="Center" Margin="0,37,0,0" Grid.Row="4" VerticalAlignment="Top" Width="120" />
+
+
+### Relay close program, constructor
+public MainViewModel()
+        {
+            CloseCommand = new RelayCommand<string>(par =>
+            {
+                System.Windows.Application.Current.Shutdown();
+            });
+        }
+
+
+     ###Close command
+        public ICommand CloseCommand { get; set; }
+
+
+### Menu close program example
+<Menu Grid.ColumnSpan="2" Margin="0,0,0,46">
+     <MenuItem Header="Program">
+           <MenuItem Header="Close" Command="{Binding CloseCommand}" />
+     </MenuItem>
+</Menu>
+
+
+
 
 # Don't forget
 - TwoWay bindings
